@@ -16,5 +16,4 @@ public class UserResource{
         public ResponseEntity<User> findById(@PathVariable Integer id){
             return ResponseEntity.ok().body(new User(1,"Lucas Souza","lucasfsouza.l10@gmail.com","1234"));
         }
-
 }
