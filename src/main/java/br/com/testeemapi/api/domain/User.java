@@ -11,14 +11,16 @@ import lombok.*;
 @AllArgsConstructor // Lombok gera um construtor com todos os parametros possiveis
 @NoArgsConstructor // Lombok gera um construtor sem parametros
 @Entity
+@Table(name = "tb_usuarios")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     private String name;
 
-    @Column(unique = true)// se houver a criação de um email já salvo no banco, ele lançará uma exception
+    @Column(name = "email",unique = true)// se houver a criação de um email já salvo no banco, ele lançará uma exception
     private String email;
     private String password;
 
