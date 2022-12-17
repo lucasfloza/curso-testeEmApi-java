@@ -1,6 +1,7 @@
 package br.com.testeemapi.api.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class UserDTO {
     private String name;
     private String email;
 
-    @JsonIgnore //omite informação
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //libera o acesso só para criar e editar, não para ver
     private String password;
 
 }
