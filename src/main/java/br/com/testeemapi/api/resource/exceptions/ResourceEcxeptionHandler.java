@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ResourceEcxeptionHandler {
 
-
-
-
         @ExceptionHandler(ObjectNotFoundException.class)
         public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException ex, HttpServletRequest request) {
             StandardError error =
