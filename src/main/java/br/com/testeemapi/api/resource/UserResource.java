@@ -17,26 +17,25 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/user")
-public class UserResource{
+public class UserResource {
 
-        @Autowired
-        private ModelMapper mapper;
+    @Autowired
+    private ModelMapper mapper;
 
-        @Autowired
-        private UserService service;
+    @Autowired
+    private UserService service;
 
-        @GetMapping(value = "/{id}")
-        public ResponseEntity<UserDTO> findById(@PathVariable Integer id){
-            return ResponseEntity.ok().body(mapper.map(service.findById(id),UserDTO.class));
-        }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(mapper.map(service.findById(id), UserDTO.class));
+    }
 
-        @GetMapping
-        public ResponseEntity<List<UserDTO>> findAll(){
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll() {
         return ResponseEntity.ok()
                 .body(service.findAll()
-                        .stream().map(x -> mapper.map(x,UserDTO.class))
+                        .stream().map(x -> mapper.map(x, UserDTO.class))
                         .collect(Collectors.toList())
-                        );
-
-        }
+                );
+    }
 }

@@ -20,7 +20,8 @@ public class User {
     private Integer id;
     private String name;
 
-    @Column(name = "email",unique = true)// se houver a criação de um email já salvo no banco, ele lançará uma exception
+    @Column(name = "email", unique = true)
+// se houver a criação de um email já salvo no banco, ele lançará uma exception
     private String email;
     private String password;
 
