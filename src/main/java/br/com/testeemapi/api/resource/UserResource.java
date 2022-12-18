@@ -34,8 +34,8 @@ public class UserResource {
         return ResponseEntity.ok()
                 .body(
                         service.findAll()
-                        .stream().map(x -> mapper.map(x, UserDTO.class))
-                        .collect(Collectors.toList())
+                                .stream().map(x -> mapper.map(x, UserDTO.class))
+                                .collect(Collectors.toList())
                 );
     }
 
