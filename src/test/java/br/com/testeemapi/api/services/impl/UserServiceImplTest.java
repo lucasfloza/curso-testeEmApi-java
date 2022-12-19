@@ -3,20 +3,19 @@ package br.com.testeemapi.api.services.impl;
 import br.com.testeemapi.api.domain.User;
 import br.com.testeemapi.api.domain.dto.UserDTO;
 import br.com.testeemapi.api.repositories.UserRepository;
-import jakarta.inject.Inject;
-import org.junit.jupiter.api.Assertions;
+import br.com.testeemapi.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -27,6 +26,7 @@ class UserServiceImplTest {
     public static final String PASSWORD = "123456";
     public static final String NAME = "Antônio JJ";
     public static final Integer ID = 3;
+    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
 
 
     @InjectMocks //real instance
@@ -56,7 +56,20 @@ class UserServiceImplTest {
 
         User response = userServiceImpl.findById(ID);
         assertNotNull(response);
-        assertEquals(User.class,response.getClass());
+        assertEquals(User.class, response.getClass());
+    }
+
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException() {
+        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
+
+        try {
+            userServiceImpl.findById(ID);
+        } catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
+
+        }
     }
 
     @Test
