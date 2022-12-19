@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -88,7 +88,7 @@ class UserServiceImplTest {
         }
 
     @Test
-    void whenCreateThenReturnSucess() {
+    void whenCreateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
 
 
@@ -111,7 +111,7 @@ class UserServiceImplTest {
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
-    void whenUpdateThenReturnSucess() {
+    void whenUpdateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
 
         User response = userServiceImpl.update(userDTO);
@@ -135,7 +135,11 @@ class UserServiceImplTest {
     }
 
     @Test
-    void delete() {
+    void deleteWithSucess() {
+        when(userRepository.findById(anyInt())).thenReturn(optionalUser);
+        doNothing().when(userRepository).deleteById(anyInt());
+        userServiceImpl.delete(ID);
+        verify(userRepository,times(1)).deleteById(anyInt());
     }
 
     private void startUser() {
