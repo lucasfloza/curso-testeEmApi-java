@@ -111,6 +111,7 @@ class UserServiceImplTest {
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
+    @Test
     void whenUpdateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
 
@@ -135,12 +136,28 @@ class UserServiceImplTest {
     }
 
     @Test
-    void deleteWithSucess() {
+    void deleteWithSuccess() {
         when(userRepository.findById(anyInt())).thenReturn(optionalUser);
         doNothing().when(userRepository).deleteById(anyInt());
         userServiceImpl.delete(ID);
         verify(userRepository,times(1)).deleteById(anyInt());
     }
+
+    @Test
+    void whenDeleteThenReturnAnObjectNotFoundException() {
+        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
+
+        try {
+            userServiceImpl.delete(ID);
+        } catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals(OBJETO_NAO_ENCONTRADO, ex.getMessage());
+
+        }
+
+    }
+
+
 
     private void startUser() {
         user = new User(ID, NAME, EMAIL, PASSWORD);
