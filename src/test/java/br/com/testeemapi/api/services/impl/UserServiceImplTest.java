@@ -60,6 +60,9 @@ class UserServiceImplTest {
         User response = userServiceImpl.findById(ID);
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
     }
 
     @Test
@@ -85,17 +88,25 @@ class UserServiceImplTest {
         assertNotNull(response);
         assertEquals(1,response.size());
         assertEquals(User.class,response.get(0).getClass());
+
+        assertEquals(ID, response.get(0).getId());
+        assertEquals(NAME, response.get(0).getName());
+        assertEquals(EMAIL, response.get(0).getEmail());
+        assertEquals(PASSWORD, response.get(0).getPassword());
         }
 
     @Test
     void whenCreateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
 
-
         User response = userServiceImpl.create(userDTO);
-
         assertNotNull(response);
+
         assertEquals(User.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
@@ -120,6 +131,10 @@ class UserServiceImplTest {
 
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
