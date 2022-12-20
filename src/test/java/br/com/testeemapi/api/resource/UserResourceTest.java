@@ -3,12 +3,10 @@ package br.com.testeemapi.api.resource;
 import br.com.testeemapi.api.domain.User;
 import br.com.testeemapi.api.domain.dto.UserDTO;
 import br.com.testeemapi.api.services.impl.UserServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,10 +15,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -84,8 +81,8 @@ class UserResourceTest {
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
-        assertEquals(ArrayList.class,response.getBody().getClass());
-        assertEquals(UserDTO.class,response.getBody().get(0).getClass());
+        assertEquals(ArrayList.class, response.getBody().getClass());
+        assertEquals(UserDTO.class, response.getBody().get(0).getClass());
 
         assertEquals(ID, response.getBody().get(0).getId());
         assertEquals(EMAIL, response.getBody().get(0).getEmail());
@@ -95,7 +92,16 @@ class UserResourceTest {
     }
 
     @Test
-    void create() {
+    void whenCreateThenReturnCreated() {
+        when(userServiceImpl.create(any())).thenReturn(user);
+
+        ResponseEntity<UserDTO> response = resource.create(userDTO);
+
+        assertEquals(ResponseEntity.class,response.getClass());
+        assertEquals(HttpStatus.CREATED,response.getStatusCode());
+        assertNotNull(response.getHeaders().get("Location"));
+
+
     }
 
     @Test
