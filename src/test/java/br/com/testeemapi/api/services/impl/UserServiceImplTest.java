@@ -3,7 +3,7 @@ package br.com.testeemapi.api.services.impl;
 import br.com.testeemapi.api.domain.User;
 import br.com.testeemapi.api.domain.dto.UserDTO;
 import br.com.testeemapi.api.repositories.UserRepository;
-import br.com.testeemapi.api.services.exceptions.DataIntegratyViolationException;
+import br.com.testeemapi.api.services.exceptions.DataIntegrityViolationException;
 import br.com.testeemapi.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,7 +107,7 @@ class UserServiceImplTest {
             userServiceImpl.create(userDTO);
         }
         catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
@@ -131,7 +131,7 @@ class UserServiceImplTest {
             userServiceImpl.update(userDTO);
         }
         catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
