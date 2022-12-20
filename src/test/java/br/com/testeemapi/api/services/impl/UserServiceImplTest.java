@@ -111,6 +111,7 @@ class UserServiceImplTest {
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
     }
+
     @Test
     void whenUpdateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
@@ -156,8 +157,6 @@ class UserServiceImplTest {
         }
 
     }
-
-
 
     private void startUser() {
         user = new User(ID, NAME, EMAIL, PASSWORD);
