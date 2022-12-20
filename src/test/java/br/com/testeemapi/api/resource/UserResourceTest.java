@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserResourceTest {
@@ -88,7 +88,6 @@ class UserResourceTest {
         assertEquals(EMAIL, response.getBody().get(0).getEmail());
         assertEquals(NAME, response.getBody().get(0).getName());
         assertEquals(PASSWORD, response.getBody().get(0).getPassword());
-
     }
 
     @Test
@@ -101,32 +100,40 @@ class UserResourceTest {
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getHeaders().get("Location"));
-
     }
 
     @Test
     void whenUpdateThenReturnSuccess() {
 
         when(userServiceImpl.update(userDTO)).thenReturn(user);
-        when(mapper.map(any(),any())).thenReturn(userDTO);
+        when(mapper.map(any(), any())).thenReturn(userDTO);
 
-        ResponseEntity<UserDTO> response = resource.update(ID,userDTO);
+        ResponseEntity<UserDTO> response = resource.update(ID, userDTO);
 
         assertNotNull(response);
         assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(ResponseEntity.class,response.getClass());
-        assertEquals(UserDTO.class,response.getBody().getClass());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(UserDTO.class, response.getBody().getClass());
 
         assertEquals(ID, response.getBody().getId());
         assertEquals(EMAIL, response.getBody().getEmail());
         assertEquals(NAME, response.getBody().getName());
         assertEquals(PASSWORD, response.getBody().getPassword());
-
     }
 
     @Test
-    void delete() {
+    void whenDeleteThenReturnSuccess() {
+
+        doNothing().when(userServiceImpl).delete(anyInt());
+
+        ResponseEntity<UserDTO> response = resource.delete(ID);
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+        verify(userServiceImpl, times(1)).delete(anyInt());
     }
 
     private void startUser() {
