@@ -58,7 +58,9 @@ class UserServiceImplTest {
                 .thenReturn(optionalUser);
 
         User response = userServiceImpl.findById(ID);
+
         assertNotNull(response);
+
         assertEquals(User.class, response.getClass());
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
@@ -86,20 +88,21 @@ class UserServiceImplTest {
         List<User> response = userServiceImpl.findAll();
 
         assertNotNull(response);
-        assertEquals(1,response.size());
-        assertEquals(User.class,response.get(0).getClass());
 
+        assertEquals(1, response.size());
+        assertEquals(User.class, response.get(0).getClass());
         assertEquals(ID, response.get(0).getId());
         assertEquals(NAME, response.get(0).getName());
         assertEquals(EMAIL, response.get(0).getEmail());
         assertEquals(PASSWORD, response.get(0).getPassword());
-        }
+    }
 
     @Test
     void whenCreateThenReturnSuccess() {
         when(userRepository.save(any())).thenReturn(user);
 
         User response = userServiceImpl.create(userDTO);
+
         assertNotNull(response);
 
         assertEquals(User.class, response.getClass());
@@ -113,11 +116,10 @@ class UserServiceImplTest {
     void whenCreateThenReturnAnDataIntegrityViolationException() {
         when(userRepository.findByEmail(anyString())).thenReturn(optionalUser);
 
-        try{
+        try {
             optionalUser.get().setId(2);
             userServiceImpl.create(userDTO);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
@@ -130,6 +132,7 @@ class UserServiceImplTest {
         User response = userServiceImpl.update(userDTO);
 
         assertNotNull(response);
+
         assertEquals(User.class, response.getClass());
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
@@ -141,11 +144,10 @@ class UserServiceImplTest {
     void whenUpdateThenReturnAnDataIntegrityViolationException() {
         when(userRepository.findByEmail(anyString())).thenReturn(optionalUser);
 
-        try{
+        try {
             optionalUser.get().setId(2);
             userServiceImpl.update(userDTO);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO_NO_SISTEMA, ex.getMessage());
         }
@@ -155,8 +157,10 @@ class UserServiceImplTest {
     void deleteWithSuccess() {
         when(userRepository.findById(anyInt())).thenReturn(optionalUser);
         doNothing().when(userRepository).deleteById(anyInt());
+
         userServiceImpl.delete(ID);
-        verify(userRepository,times(1)).deleteById(anyInt());
+
+        verify(userRepository, times(1)).deleteById(anyInt());
     }
 
     @Test

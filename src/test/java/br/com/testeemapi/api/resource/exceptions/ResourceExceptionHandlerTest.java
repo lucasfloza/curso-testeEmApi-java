@@ -36,13 +36,15 @@ class ResourceExceptionHandlerTest {
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(StandardError.class, response.getBody().getClass());
         assertEquals(OBJETO_NAO_ENCONTRADO, response.getBody().getError());
+        assertEquals(404, response.getBody().getStatus());
+
         assertNotEquals("/user/2", response.getBody().getPath());
         assertNotEquals(LocalDateTime.now(), response.getBody().getTimestamp());
-        assertEquals(404, response.getBody().getStatus());
 
     }
 
@@ -50,10 +52,14 @@ class ResourceExceptionHandlerTest {
     void dataIntegrityViolationException() {
 
         ResponseEntity<StandardError> response = exceptionHandler
-                .dataIntegrityViolationException(new DataIntegrityViolationException(E_MAIL_JA_CADASTRADO_NO_SISTEMA), new MockHttpServletRequest());
+                .dataIntegrityViolationException(
+                        new DataIntegrityViolationException(E_MAIL_JA_CADASTRADO_NO_SISTEMA),
+                        new MockHttpServletRequest()
+                );
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(StandardError.class, response.getBody().getClass());

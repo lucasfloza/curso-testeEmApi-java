@@ -60,9 +60,9 @@ class UserResourceTest {
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(UserDTO.class, response.getBody().getClass());
-
         assertEquals(ID, response.getBody().getId());
         assertEquals(EMAIL, response.getBody().getEmail());
         assertEquals(NAME, response.getBody().getName());
@@ -79,11 +79,11 @@ class UserResourceTest {
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(ArrayList.class, response.getBody().getClass());
         assertEquals(UserDTO.class, response.getBody().get(0).getClass());
-
         assertEquals(ID, response.getBody().get(0).getId());
         assertEquals(EMAIL, response.getBody().get(0).getEmail());
         assertEquals(NAME, response.getBody().get(0).getName());
@@ -97,9 +97,11 @@ class UserResourceTest {
 
         ResponseEntity<UserDTO> response = resource.create(userDTO);
 
+        assertNotNull(response.getHeaders().get("Location"));
+
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getHeaders().get("Location"));
+
     }
 
     @Test
@@ -112,10 +114,10 @@ class UserResourceTest {
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(UserDTO.class, response.getBody().getClass());
-
         assertEquals(ID, response.getBody().getId());
         assertEquals(EMAIL, response.getBody().getEmail());
         assertEquals(NAME, response.getBody().getName());
@@ -130,6 +132,7 @@ class UserResourceTest {
         ResponseEntity<UserDTO> response = resource.delete(ID);
 
         assertNotNull(response);
+
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
