@@ -1,7 +1,9 @@
 package br.com.testeemapi.api.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data // gera os métodos EqualsAndHashCode, ToString, Setter, Getter
 //@Getter // Lombok gera os métodos Getter de todos os atributos

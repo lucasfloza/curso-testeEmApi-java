@@ -1,7 +1,6 @@
 package br.com.testeemapi.api.resource;
 
 
-import br.com.testeemapi.api.domain.User;
 import br.com.testeemapi.api.domain.dto.UserDTO;
 import br.com.testeemapi.api.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,8 +56,9 @@ public class UserResource {
         obj.setId(id);
         return ResponseEntity.ok().body(mapper.map(service.update(obj), UserDTO.class));
     }
+
     @DeleteMapping(value = ID)
-    public ResponseEntity<UserDTO> delete(@PathVariable Integer id){
+    public ResponseEntity<UserDTO> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
